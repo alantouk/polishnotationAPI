@@ -1,0 +1,335 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Test",
+		"_postman_id": "a7f8ce50-b24f-e309-ab14-c590153967f0",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Addition",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Result is 2\"] = jsonData.result === 2;"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "home",
+						"password": "test",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": "http://home-assignment.herokuapp.com/api/calculate/+%201%201",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic aG9tZTp0ZXN0",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Substraction",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Result is 10\"] = jsonData.result === 10;"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "home",
+						"password": "test",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": "http://home-assignment.herokuapp.com/api/calculate/-%2020%2010",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic aG9tZTp0ZXN0",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Multiplication",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Result is 200\"] = jsonData.result === 200;"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.setEnvironmentVariable(\"polishNotication\", \" 10 2\")"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "home",
+						"password": "test",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": "http://home-assignment.herokuapp.com/api/calculate/{{polishNotication}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic aG9tZTp0ZXN0",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Division",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Result is 200\"] = jsonData.result === 200;"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.setEnvironmentVariable(\"polishNotication\", \" 10 2\")"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "home",
+						"password": "test",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": "http://home-assignment.herokuapp.com/api/calculate/{{polishNotication}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic aG9tZTp0ZXN0",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Complex",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Result is 200\"] = jsonData.result === 200;"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.setEnvironmentVariable(\"polishNotication\", \" 10 2\")"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "home",
+						"password": "test",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": "http://home-assignment.herokuapp.com/api/calculate/{{polishNotication}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic aG9tZTp0ZXN0",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Power of",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Result is 200\"] = jsonData.result === 200;"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.setEnvironmentVariable(\"polishNotication\", \"+ 20000 20000\")"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "home",
+						"password": "test",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": "http://home-assignment.herokuapp.com/api/calculate/{{polishNotication}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic aG9tZTp0ZXN0",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
