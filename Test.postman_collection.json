@@ -8,7 +8,93 @@
 	},
 	"item": [
 		{
-			"name": "Addition",
+			"name": "No Basic Auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 401\"] = responseCode.code === 401;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://home-assignment.herokuapp.com/api/calculate/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "//Content-Type",
+						"value": "text/html",
+						"description": "",
+						"disabled": true
+					},
+					{
+						"key": "//Authorization",
+						"value": "Basic aG9tZTp0ZXN0",
+						"description": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Incorrect Basic Auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 401\"] = responseCode.code === 401;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Bad credentials message\"] = jsonData.message === \"Bad credentials\";"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "error",
+						"password": "error",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": "http://home-assignment.herokuapp.com/api/calculate/+%201%201",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic ZXJyb3I6ZXJyb3I=",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Correct Basic Auth",
 			"event": [
 				{
 					"listen": "test",
@@ -16,9 +102,8 @@
 						"type": "text/javascript",
 						"exec": [
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
-							"",
-							"var jsonData = JSON.parse(responseBody);",
-							"tests[\"Result is 2\"] = jsonData.result === 2;"
+							"tests[\"Body matches string\"] = responseBody.has(\"Tax Calculator Service\");",
+							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");"
 						]
 					}
 				}
@@ -33,7 +118,175 @@
 						"showPassword": false
 					}
 				},
-				"url": "http://home-assignment.herokuapp.com/api/calculate/+%201%201",
+				"url": "http://home-assignment.herokuapp.com/api/calculate/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic aG9tZTp0ZXN0",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Polish Notation input",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 500\"] = responseCode.code === 500;"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "home",
+						"password": "test",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": "http://home-assignment.herokuapp.com/api/calculate/+abc",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic aG9tZTp0ZXN0",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Missing Operator",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Result is not 12\"] = jsonData.result !== 12;"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "home",
+						"password": "test",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": "http://home-assignment.herokuapp.com/api/calculate/ 10 2",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic aG9tZTp0ZXN0",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Addition",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Result is 12\"] = jsonData.result === 12;",
+							"",
+							"var schema = {",
+							"    \"items\" : {",
+							"        \"properties\": {",
+							"            \"expression\": {",
+							"                \"type\": \"integer\"",
+							"            },",
+							"            \"result\": {",
+							"                \"type\": \"integer\"",
+							"            },",
+							"        },",
+							"        \"additionalProperties\": true,",
+							"        \"required\": [ \"expression\", \"result\" ]",
+							"    },",
+							"};",
+							"",
+							"tests[\"Valid schema\"] = tv4.validate(jsonData, schema);",
+							"console.log(\"Validation failed: \", tv4.error);"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.setEnvironmentVariable(\"polishNotication\", \"+ 10 2\")"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "home",
+						"password": "test",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": "http://home-assignment.herokuapp.com/api/calculate/{{polishNotication}}",
 				"method": "GET",
 				"header": [
 					{
@@ -66,7 +319,17 @@
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
 							"",
 							"var jsonData = JSON.parse(responseBody);",
-							"tests[\"Result is 10\"] = jsonData.result === 10;"
+							"tests[\"Result is 90\"] = jsonData.result === 90;"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"// 99 - 9",
+							"postman.setEnvironmentVariable(\"polishNotication\", \"- 99 9\")"
 						]
 					}
 				}
@@ -81,7 +344,7 @@
 						"showPassword": false
 					}
 				},
-				"url": "http://home-assignment.herokuapp.com/api/calculate/-%2020%2010",
+				"url": "http://home-assignment.herokuapp.com/api/calculate/{{polishNotication}}",
 				"method": "GET",
 				"header": [
 					{
@@ -114,7 +377,7 @@
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
 							"",
 							"var jsonData = JSON.parse(responseBody);",
-							"tests[\"Result is 200\"] = jsonData.result === 200;"
+							"tests[\"Result is 200\"] = jsonData.result === 20;"
 						]
 					}
 				},
@@ -123,7 +386,8 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"postman.setEnvironmentVariable(\"polishNotication\", \" 10 2\")"
+							"// 10 * 2",
+							"postman.setEnvironmentVariable(\"polishNotication\", \"* 10 2\")"
 						]
 					}
 				}
@@ -171,7 +435,7 @@
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
 							"",
 							"var jsonData = JSON.parse(responseBody);",
-							"tests[\"Result is 200\"] = jsonData.result === 200;"
+							"tests[\"Result is 5\"] = jsonData.result === 5;"
 						]
 					}
 				},
@@ -180,7 +444,8 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"postman.setEnvironmentVariable(\"polishNotication\", \" 10 2\")"
+							"// 10 ÷ 2",
+							"postman.setEnvironmentVariable(\"polishNotication\", \"/ 10 2\")"
 						]
 					}
 				}
@@ -228,7 +493,7 @@
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
 							"",
 							"var jsonData = JSON.parse(responseBody);",
-							"tests[\"Result is 200\"] = jsonData.result === 200;"
+							"tests[\"Result is -5\"] = jsonData.result === -5;"
 						]
 					}
 				},
@@ -237,7 +502,8 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"postman.setEnvironmentVariable(\"polishNotication\", \" 10 2\")"
+							"// 5 − (5 × 2)",
+							"postman.setEnvironmentVariable(\"polishNotication\", \"- 5 * 5 2\")"
 						]
 					}
 				}
@@ -275,7 +541,7 @@
 			"response": []
 		},
 		{
-			"name": "Power of",
+			"name": "Max Boundary",
 			"event": [
 				{
 					"listen": "test",
@@ -285,7 +551,7 @@
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
 							"",
 							"var jsonData = JSON.parse(responseBody);",
-							"tests[\"Result is 200\"] = jsonData.result === 200;"
+							"tests[\"Result is not equal to Integer Max\"] = jsonData.result !== 32768;"
 						]
 					}
 				},
@@ -294,7 +560,66 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"postman.setEnvironmentVariable(\"polishNotication\", \"+ 20000 20000\")"
+							"// Max integer is 32767",
+							"postman.setEnvironmentVariable(\"polishNotication\", \"+ 32767 1\")"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "home",
+						"password": "test",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": "http://home-assignment.herokuapp.com/api/calculate/{{polishNotication}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic aG9tZTp0ZXN0",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Min Boundary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Result is not equal to Integer Max\"] = jsonData.result !== -32769;"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"// Min integer is -32768",
+							"postman.setEnvironmentVariable(\"polishNotication\", \"- -32768 1\")"
 						]
 					}
 				}
