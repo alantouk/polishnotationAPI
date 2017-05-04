@@ -9,6 +9,7 @@ Install NodeJS and npm. Newman is written in NodeJS and we distribute the offici
 
 Access to Jenkin server and interface
 
+## Steps
 1. On the Jenkins machine install newman using "npm install -g newman"
 2. Copy the "Test.postman_collection.json" to a directory and remember this for later
 
@@ -19,10 +20,10 @@ Note: You Run this collection inside newman, using the command "newman run Test.
 4. Add a build step in the project. The build step executes a Shell command (for linux and Mac OS) and execute Windows batch command (for windows).
 
 5. The command is 
-
+```
 export PATH=/usr/local/bin/
 newman run /DIRECTORY/Test.postman_collection.json
-
+```
 Replacing DIRECTORY with the directory path to the json file
 
 6. Click the save button to finish creating the project.
